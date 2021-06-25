@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+
 <html>
   <head>
     <meta charset="utf-8">
@@ -12,12 +9,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
   </head>
-  <body>
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <button class="btn btn-primary"><i class="fab fa-500px"></i>asdfasf</button>
+  <body class="container-fluid mx-0 px-0">
+
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+      </div>
+    </nav>
     
+    <div class="container-fluid mx-0 px-0 row">
+      <aside id="sidebar" class="col-2 bg-dark">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Active</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Disabled</a>
+            <div class="collapse" id="collapseExample">
+              <div class="card card-body bg-dark text-white">
+                Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+              </div>
+            </div>
+          </li>
+        </ul>
+      </aside>
+      <div id="content" class="col-10 bg-light d-flex flex-column">
+        <h1 class="display-1 my-5">asdfasfasdfasdfasdfasf</h1>
+        <h1 class="display-1 my-5">asdfasfasdfasdfasdfasf</h1>
+        
+
+      </div>
+    </div>
     <script src="main.js" async defer></script>
   </body>
 </html>
