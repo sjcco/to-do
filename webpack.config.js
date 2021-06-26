@@ -22,7 +22,7 @@ module.exports = {
         loader: 'file-loader',
         options: {
           outputPath: 'fonts',
-        }
+        },
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/,
@@ -32,10 +32,10 @@ module.exports = {
             options: {
               name: '[name].[ext]',
               outputPath: 'img/',
-            }
-          }
-        ]
-      }
-    ]
-  }
-}
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
