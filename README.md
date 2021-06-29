@@ -49,4 +49,4 @@ Give a ⭐️ if you like this project!
 
 ## 📝 License
 
-This project is [MIT](lic.url) licensed.
+Available as open source under the terms of the [MIT](https://opensource.org/licenses/MIT) licence.
