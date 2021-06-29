@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import {
-  addAlert, rename, clearTasks, drawTask,
+  addAlert, rename, clearTasks, drawTask, saveToLocalStorage,
 } from './dom';
 
 const tasks = [];
@@ -39,12 +39,13 @@ function drawList(title) {
   }
 }
 
-function createTask(modal) {
+const createTask = (modal) => {
   if (title.value == '' || date.value == '') {// eslint-disable-line
     addAlert(document.querySelector('.modal-body'));
   } else {
     const newTask = task(title.value, project.value, priority.value, date.value);// eslint-disable-line
     tasks.push(newTask);
+    saveToLocalStorage();
     drawList(project.value);// eslint-disable-line
     title.value = '';// eslint-disable-line
     project.value = 'Default';// eslint-disable-line
@@ -52,7 +53,7 @@ function createTask(modal) {
     date.value = '';// eslint-disable-line
     modal.hide();
   }
-}
+};
 
 export {
   task, tasks, createTask, drawList,

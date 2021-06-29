@@ -1,9 +1,8 @@
 import '@fortawesome/fontawesome-free/js/all';
 import './main.scss';
-import { addProject, bsModal, bsCollapse } from './modules/dom';
-import {
-  createTask, drawList,
-} from './modules/data';
+import { 
+  addProject, bsModal, bsCollapse, retrieveLocalStorage } from './modules/dom';
+import { createTask, drawList } from './modules/data';
 
 window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 
@@ -14,6 +13,9 @@ const projectcollapse = new bootstrap.Collapse(bsCollapse, { toggle: false });
 
 
 addProject(projectcollapse, true);
+retrieveLocalStorage();
+drawList('Default');
+
 
 document.querySelector('#taskForm').addEventListener('submit', (e) => {
   e.preventDefault();

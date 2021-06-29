@@ -22551,6 +22551,9 @@ const projectcollapse = new bootstrap.Collapse(_modules_dom__WEBPACK_IMPORTED_MO
 
 
 (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(projectcollapse, true);
+(0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.retrieveLocalStorage)();
+(0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawList)('Default');
+
 
 document.querySelector('#taskForm').addEventListener('submit', (e) => {
   e.preventDefault();
@@ -22620,12 +22623,13 @@ function drawList(title) {
   }
 }
 
-function createTask(modal) {
+const createTask = (modal) => {
   if (title.value == '' || date.value == '') {// eslint-disable-line
     (0,_dom__WEBPACK_IMPORTED_MODULE_0__.addAlert)(document.querySelector('.modal-body'));
   } else {
     const newTask = task(title.value, project.value, priority.value, date.value);// eslint-disable-line
     tasks.push(newTask);
+    (0,_dom__WEBPACK_IMPORTED_MODULE_0__.saveToLocalStorage)();
     drawList(project.value);// eslint-disable-line
     title.value = '';// eslint-disable-line
     project.value = 'Default';// eslint-disable-line
@@ -22633,7 +22637,7 @@ function createTask(modal) {
     date.value = '';// eslint-disable-line
     modal.hide();
   }
-}
+};
 
 
 
@@ -22654,7 +22658,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "addAlert": () => (/* binding */ addAlert),
 /* harmony export */   "rename": () => (/* binding */ rename),
 /* harmony export */   "clearTasks": () => (/* binding */ clearTasks),
-/* harmony export */   "drawTask": () => (/* binding */ drawTask)
+/* harmony export */   "drawTask": () => (/* binding */ drawTask),
+/* harmony export */   "saveToLocalStorage": () => (/* binding */ saveToLocalStorage),
+/* harmony export */   "retrieveLocalStorage": () => (/* binding */ retrieveLocalStorage)
 /* harmony export */ });
 /* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data */ "./src/modules/data.js");
 // eslint-disable-next-line import/no-cycle
@@ -22729,7 +22735,21 @@ function clearTasks() {
   }
 }
 
-function drawTask(task, index) {
+const saveToLocalStorage = () => {
+  localStorage.clear();
+  localStorage.setItem('tasks', JSON.stringify(_data__WEBPACK_IMPORTED_MODULE_0__.tasks));
+};
+
+const retrieveLocalStorage = () => {
+  if (localStorage.tasks) {
+    const arr = JSON.parse(localStorage.getItem('tasks'));
+    arr.forEach(element => {
+      _data__WEBPACK_IMPORTED_MODULE_0__.tasks.push(element);
+    });
+  }
+};
+
+const drawTask = (task, index) => {
   const taskList = document.getElementById('tasksContainer');
   const label = document.createElement('label');
   label.classList.add('control', 'control-checkbox', 'mx-5', 'mb-4');
@@ -22775,9 +22795,10 @@ function drawTask(task, index) {
   input.setAttribute('data-index', index);
   input.addEventListener('change', (e) => {
     _data__WEBPACK_IMPORTED_MODULE_0__.tasks.splice(e.target.dataset.index, 1);
+    saveToLocalStorage();
     (0,_data__WEBPACK_IMPORTED_MODULE_0__.drawList)(document.getElementById('projectTitle').textContent);
   });
-}
+};
 
 
 

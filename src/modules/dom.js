@@ -70,7 +70,21 @@ function clearTasks() {
   }
 }
 
-function drawTask(task, index) {
+const saveToLocalStorage = () => {
+  localStorage.clear();
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+};
+
+const retrieveLocalStorage = () => {
+  if (localStorage.tasks) {
+    const arr = JSON.parse(localStorage.getItem('tasks'));
+    arr.forEach(element => {
+      tasks.push(element);
+    });
+  }
+};
+
+const drawTask = (task, index) => {
   const taskList = document.getElementById('tasksContainer');
   const label = document.createElement('label');
   label.classList.add('control', 'control-checkbox', 'mx-5', 'mb-4');
@@ -116,10 +130,12 @@ function drawTask(task, index) {
   input.setAttribute('data-index', index);
   input.addEventListener('change', (e) => {
     tasks.splice(e.target.dataset.index, 1);
+    saveToLocalStorage();
     drawList(document.getElementById('projectTitle').textContent);
   });
-}
+};
 
 export {
-  addProject, bsModal, bsCollapse, addAlert, rename, clearTasks, drawTask,
+  addProject, bsModal, bsCollapse, addAlert, rename,
+  clearTasks, drawTask, saveToLocalStorage, retrieveLocalStorage,
 };
