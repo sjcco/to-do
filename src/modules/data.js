@@ -9,7 +9,7 @@ const task = (title, project, priority, date) => ({
   title, project, priority, date,
 });
 
-function drawList(title) {
+const drawList = (title) => {
   rename(title);
   let today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
@@ -37,7 +37,7 @@ function drawList(title) {
       }
     });
   }
-}
+};
 
 const createTask = (modal) => {
   if (title.value == '' || date.value == '') {// eslint-disable-line
@@ -55,6 +55,16 @@ const createTask = (modal) => {
   }
 };
 
+const updateTask = (modal) => {
+  tasks[hidden.value].title = title.value;
+  tasks[hidden.value].project = project.value;
+  tasks[hidden.value].priority = priority.value;
+  tasks[hidden.value].date = date.value;
+  saveToLocalStorage();
+  drawList(project.value);
+  modal.hide();
+};
+
 export {
-  task, tasks, createTask, drawList,
+  task, tasks, createTask, drawList, updateTask,
 };

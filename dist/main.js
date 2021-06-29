@@ -22544,28 +22544,37 @@ __webpack_require__.r(__webpack_exports__);
 
 window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.js");
 
-// eslint-disable-next-line no-undef
-const taskModal = new bootstrap.Modal(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.bsModal, { focus: false });
-// eslint-disable-next-line no-undef
-const projectcollapse = new bootstrap.Collapse(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.bsCollapse, { toggle: false });
 
+let stuff = document.getElementById('content');
+let button = document.createElement('button');
+button.textContent = 'open modal';
+button.addEventListener('click', () => { _modules_dom__WEBPACK_IMPORTED_MODULE_2__.taskModal.show(); });
+stuff.appendChild(button);
 
-(0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(projectcollapse, true);
+(0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.projectcollapse, true);
 (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.retrieveLocalStorage)();
 (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawList)('Default');
 
 
 document.querySelector('#taskForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.createTask)(taskModal);
+  console.log(hidden.value);
+  if (hidden.value === 'create') {
+    (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.createTask)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.taskModal);
+  } else {
+    (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.updateTask)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.taskModal);
+  }
+  
 });
-document.querySelector('#newProjectBtn').onclick = () => { (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(projectcollapse); };
+document.querySelector('#addTask').onclick = () => { document.getElementById('hidden').value = 'create'; };
+document.querySelector('#newProjectBtn').onclick = () => { (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.projectcollapse); };
 document.querySelector('#cancelProjectBtn').onclick = () => {
   document.getElementById('newProjectForm').value = '';
-  projectcollapse.hide();
+  _modules_dom__WEBPACK_IMPORTED_MODULE_2__.projectcollapse.hide();
 };
 document.getElementById('today').onclick = () => { (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawList)('Today'); };
 document.getElementById('upcoming').onclick = () => { (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawList)('Upcoming'); };
+_modules_dom__WEBPACK_IMPORTED_MODULE_2__.bsModal.addEventListener('hidden.bs.modal', () => { (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.clearForm)(); });
 
 /***/ }),
 
@@ -22581,7 +22590,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "task": () => (/* binding */ task),
 /* harmony export */   "tasks": () => (/* binding */ tasks),
 /* harmony export */   "createTask": () => (/* binding */ createTask),
-/* harmony export */   "drawList": () => (/* binding */ drawList)
+/* harmony export */   "drawList": () => (/* binding */ drawList),
+/* harmony export */   "updateTask": () => (/* binding */ updateTask)
 /* harmony export */ });
 /* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom */ "./src/modules/dom.js");
 // eslint-disable-next-line import/no-cycle
@@ -22593,7 +22603,7 @@ const task = (title, project, priority, date) => ({
   title, project, priority, date,
 });
 
-function drawList(title) {
+const drawList = (title) => {
   (0,_dom__WEBPACK_IMPORTED_MODULE_0__.rename)(title);
   let today = new Date();
   const dd = String(today.getDate()).padStart(2, '0');
@@ -22621,7 +22631,7 @@ function drawList(title) {
       }
     });
   }
-}
+};
 
 const createTask = (modal) => {
   if (title.value == '' || date.value == '') {// eslint-disable-line
@@ -22637,6 +22647,16 @@ const createTask = (modal) => {
     date.value = '';// eslint-disable-line
     modal.hide();
   }
+};
+
+const updateTask = (modal) => {
+  tasks[hidden.value].title = title.value;
+  tasks[hidden.value].project = project.value;
+  tasks[hidden.value].priority = priority.value;
+  tasks[hidden.value].date = date.value;
+  (0,_dom__WEBPACK_IMPORTED_MODULE_0__.saveToLocalStorage)();
+  drawList(project.value);
+  modal.hide();
 };
 
 
@@ -22660,14 +22680,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "clearTasks": () => (/* binding */ clearTasks),
 /* harmony export */   "drawTask": () => (/* binding */ drawTask),
 /* harmony export */   "saveToLocalStorage": () => (/* binding */ saveToLocalStorage),
-/* harmony export */   "retrieveLocalStorage": () => (/* binding */ retrieveLocalStorage)
+/* harmony export */   "retrieveLocalStorage": () => (/* binding */ retrieveLocalStorage),
+/* harmony export */   "taskModal": () => (/* binding */ taskModal),
+/* harmony export */   "projectcollapse": () => (/* binding */ projectcollapse),
+/* harmony export */   "clearForm": () => (/* binding */ clearForm)
 /* harmony export */ });
 /* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data */ "./src/modules/data.js");
 // eslint-disable-next-line import/no-cycle
 
 
+window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.js");
+
 const bsModal = document.getElementById('taskModal');
 const bsCollapse = document.getElementById('collapseNewProject');
+
+const taskModal = new bootstrap.Modal(bsModal, { focus: false });
+// eslint-disable-next-line no-undef
+const projectcollapse = new bootstrap.Collapse(bsCollapse, { toggle: false });
 
 const addProject = (collapse, def = false) => {
   const input = document.querySelector('#newProjectForm');
@@ -22723,17 +22752,17 @@ const addAlert = (parent) => {
   setTimeout(() => { bsAlert.close(); }, 5000);
 };
 
-function rename(title) {
+const rename = (title) => {
   const header = document.getElementById('projectTitle');
   header.textContent = title;
-}
+};
 
-function clearTasks() {
+const clearTasks = () => {
   const taskList = document.getElementById('tasksContainer');
   while (taskList.firstChild) {
     taskList.removeChild(taskList.lastChild);
   }
-}
+};
 
 const saveToLocalStorage = () => {
   localStorage.clear();
@@ -22749,15 +22778,29 @@ const retrieveLocalStorage = () => {
   }
 };
 
+const fillForm = (index) => {
+  document.getElementById('title').value = _data__WEBPACK_IMPORTED_MODULE_0__.tasks[index].title;
+  document.getElementById('project').value = _data__WEBPACK_IMPORTED_MODULE_0__.tasks[index].project;
+  document.getElementById('priority').value = _data__WEBPACK_IMPORTED_MODULE_0__.tasks[index].priority;
+  document.getElementById('date').value = _data__WEBPACK_IMPORTED_MODULE_0__.tasks[index].date;
+};
+
+const clearForm = (index) => {
+  document.getElementById('title').value = '';
+  document.getElementById('project').value = 'Default';
+  document.getElementById('priority').value = 'low';
+  document.getElementById('date').value = '';
+};
+
 const drawTask = (task, index) => {
   const taskList = document.getElementById('tasksContainer');
   const label = document.createElement('label');
-  label.classList.add('control', 'control-checkbox', 'mx-5', 'mb-4');
+  label.classList.add('control', 'control-checkbox');
   const infoCont = document.createElement('div');
   infoCont.classList.add('row', 'justify-content-between');
   label.appendChild(infoCont);
   const title = document.createElement('div');
-  title.classList.add('col-5');
+  title.classList.add('col-5', 'ps-4');
   title.textContent = task.title;
   const priority = document.createElement('div');
   priority.classList.add('col-auto');
@@ -22780,6 +22823,15 @@ const drawTask = (task, index) => {
   priority.appendChild(prioritySpan);
   const date = document.createElement('div');
   date.classList.add('col-auto');
+  const editcont = document.createElement('div');
+  editcont.classList.add('col-auto');
+  const editAnchor = document.createElement('a');
+  editAnchor.classList.add('text-decoration-none');
+  editAnchor.setAttribute('role', 'button');
+  const edit = document.createElement('i');
+  edit.classList.add('fas', 'fa-edit');
+  editAnchor.appendChild(edit);
+  editcont.appendChild(editAnchor);
   date.textContent = task.date;
   infoCont.appendChild(title);
   infoCont.appendChild(priority);
@@ -22789,11 +22841,23 @@ const drawTask = (task, index) => {
   input.setAttribute('type', 'checkbox');
   label.appendChild(input);
   const control = document.createElement('div');
-  control.classList.add('control_indicator');
+  control.classList.add('control_indicator', 'px-1');
   label.appendChild(control);
-  taskList.appendChild(label);
+  const todoCont = document.createElement('div');
+  todoCont.classList.add('row', 'justify-content-center');
+  label.classList.add('col-10');
+  taskList.appendChild(todoCont);
+  todoCont.appendChild(label);
+  todoCont.appendChild(editcont);
   input.setAttribute('data-index', index);
+  editAnchor.setAttribute('data-index', index);
+  editAnchor.addEventListener('click', (e) => {
+    document.getElementById('hidden').value = e.target.closest('a').dataset.index;
+    fillForm(e.target.closest('a').dataset.index);
+    taskModal.show();
+  });
   input.addEventListener('change', (e) => {
+    console.log(e.target);
     _data__WEBPACK_IMPORTED_MODULE_0__.tasks.splice(e.target.dataset.index, 1);
     saveToLocalStorage();
     (0,_data__WEBPACK_IMPORTED_MODULE_0__.drawList)(document.getElementById('projectTitle').textContent);

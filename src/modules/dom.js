@@ -1,8 +1,14 @@
 // eslint-disable-next-line import/no-cycle
 import { drawList, tasks } from './data';
 
+window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
+
 const bsModal = document.getElementById('taskModal');
 const bsCollapse = document.getElementById('collapseNewProject');
+
+const taskModal = new bootstrap.Modal(bsModal, { focus: false });
+// eslint-disable-next-line no-undef
+const projectcollapse = new bootstrap.Collapse(bsCollapse, { toggle: false });
 
 const addProject = (collapse, def = false) => {
   const input = document.querySelector('#newProjectForm');
@@ -58,17 +64,17 @@ const addAlert = (parent) => {
   setTimeout(() => { bsAlert.close(); }, 5000);
 };
 
-function rename(title) {
+const rename = (title) => {
   const header = document.getElementById('projectTitle');
   header.textContent = title;
-}
+};
 
-function clearTasks() {
+const clearTasks = () => {
   const taskList = document.getElementById('tasksContainer');
   while (taskList.firstChild) {
     taskList.removeChild(taskList.lastChild);
   }
-}
+};
 
 const saveToLocalStorage = () => {
   localStorage.clear();
@@ -84,15 +90,29 @@ const retrieveLocalStorage = () => {
   }
 };
 
+const fillForm = (index) => {
+  document.getElementById('title').value = tasks[index].title;
+  document.getElementById('project').value = tasks[index].project;
+  document.getElementById('priority').value = tasks[index].priority;
+  document.getElementById('date').value = tasks[index].date;
+};
+
+const clearForm = (index) => {
+  document.getElementById('title').value = '';
+  document.getElementById('project').value = 'Default';
+  document.getElementById('priority').value = 'low';
+  document.getElementById('date').value = '';
+};
+
 const drawTask = (task, index) => {
   const taskList = document.getElementById('tasksContainer');
   const label = document.createElement('label');
-  label.classList.add('control', 'control-checkbox', 'mx-5', 'mb-4');
+  label.classList.add('control', 'control-checkbox');
   const infoCont = document.createElement('div');
   infoCont.classList.add('row', 'justify-content-between');
   label.appendChild(infoCont);
   const title = document.createElement('div');
-  title.classList.add('col-5');
+  title.classList.add('col-5', 'ps-4');
   title.textContent = task.title;
   const priority = document.createElement('div');
   priority.classList.add('col-auto');
@@ -115,6 +135,15 @@ const drawTask = (task, index) => {
   priority.appendChild(prioritySpan);
   const date = document.createElement('div');
   date.classList.add('col-auto');
+  const editcont = document.createElement('div');
+  editcont.classList.add('col-auto');
+  const editAnchor = document.createElement('a');
+  editAnchor.classList.add('text-decoration-none');
+  editAnchor.setAttribute('role', 'button');
+  const edit = document.createElement('i');
+  edit.classList.add('fas', 'fa-edit');
+  editAnchor.appendChild(edit);
+  editcont.appendChild(editAnchor);
   date.textContent = task.date;
   infoCont.appendChild(title);
   infoCont.appendChild(priority);
@@ -124,11 +153,23 @@ const drawTask = (task, index) => {
   input.setAttribute('type', 'checkbox');
   label.appendChild(input);
   const control = document.createElement('div');
-  control.classList.add('control_indicator');
+  control.classList.add('control_indicator', 'px-1');
   label.appendChild(control);
-  taskList.appendChild(label);
+  const todoCont = document.createElement('div');
+  todoCont.classList.add('row', 'justify-content-center');
+  label.classList.add('col-10');
+  taskList.appendChild(todoCont);
+  todoCont.appendChild(label);
+  todoCont.appendChild(editcont);
   input.setAttribute('data-index', index);
+  editAnchor.setAttribute('data-index', index);
+  editAnchor.addEventListener('click', (e) => {
+    document.getElementById('hidden').value = e.target.closest('a').dataset.index;
+    fillForm(e.target.closest('a').dataset.index);
+    taskModal.show();
+  });
   input.addEventListener('change', (e) => {
+    console.log(e.target);
     tasks.splice(e.target.dataset.index, 1);
     saveToLocalStorage();
     drawList(document.getElementById('projectTitle').textContent);
@@ -138,4 +179,5 @@ const drawTask = (task, index) => {
 export {
   addProject, bsModal, bsCollapse, addAlert, rename,
   clearTasks, drawTask, saveToLocalStorage, retrieveLocalStorage,
+  taskModal, projectcollapse, clearForm,
 };

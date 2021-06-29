@@ -1,16 +1,17 @@
 import '@fortawesome/fontawesome-free/js/all';
 import './main.scss';
 import { 
-  addProject, bsModal, bsCollapse, retrieveLocalStorage } from './modules/dom';
-import { createTask, drawList } from './modules/data';
+  addProject, retrieveLocalStorage, taskModal, projectcollapse, clearForm, bsModal } from './modules/dom';
+import { createTask, drawList, updateTask } from './modules/data';
 
 window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 
-// eslint-disable-next-line no-undef
-const taskModal = new bootstrap.Modal(bsModal, { focus: false });
-// eslint-disable-next-line no-undef
-const projectcollapse = new bootstrap.Collapse(bsCollapse, { toggle: false });
 
+let stuff = document.getElementById('content');
+let button = document.createElement('button');
+button.textContent = 'open modal';
+button.addEventListener('click', () => { taskModal.show(); });
+stuff.appendChild(button);
 
 addProject(projectcollapse, true);
 retrieveLocalStorage();
@@ -19,8 +20,15 @@ drawList('Default');
 
 document.querySelector('#taskForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  createTask(taskModal);
+  console.log(hidden.value);
+  if (hidden.value === 'create') {
+    createTask(taskModal);
+  } else {
+    updateTask(taskModal);
+  }
+  
 });
+document.querySelector('#addTask').onclick = () => { document.getElementById('hidden').value = 'create'; };
 document.querySelector('#newProjectBtn').onclick = () => { addProject(projectcollapse); };
 document.querySelector('#cancelProjectBtn').onclick = () => {
   document.getElementById('newProjectForm').value = '';
@@ -28,3 +36,4 @@ document.querySelector('#cancelProjectBtn').onclick = () => {
 };
 document.getElementById('today').onclick = () => { drawList('Today'); };
 document.getElementById('upcoming').onclick = () => { drawList('Upcoming'); };
+bsModal.addEventListener('hidden.bs.modal', () => { clearForm(); });
