@@ -22544,16 +22544,10 @@ __webpack_require__.r(__webpack_exports__);
 
 window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.js");
 
-
-let stuff = document.getElementById('content');
-let button = document.createElement('button');
-button.textContent = 'open modal';
-button.addEventListener('click', () => { _modules_dom__WEBPACK_IMPORTED_MODULE_2__.taskModal.show(); });
-stuff.appendChild(button);
-
 (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.projectcollapse, true);
 (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.retrieveLocalStorage)();
 (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawList)('Default');
+(0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawProjects)();
 
 
 document.querySelector('#taskForm').addEventListener('submit', (e) => {
@@ -22564,10 +22558,13 @@ document.querySelector('#taskForm').addEventListener('submit', (e) => {
   } else {
     (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.updateTask)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.taskModal);
   }
-  
 });
 document.querySelector('#addTask').onclick = () => { document.getElementById('hidden').value = 'create'; };
-document.querySelector('#newProjectBtn').onclick = () => { (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.projectcollapse); };
+document.querySelector('#newProjectBtn').onclick = () => {
+  _modules_data__WEBPACK_IMPORTED_MODULE_3__.projects.push(document.querySelector('#newProjectForm').value);
+  (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.saveToLocalStorage)();
+  (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.projectcollapse);
+};
 document.querySelector('#cancelProjectBtn').onclick = () => {
   document.getElementById('newProjectForm').value = '';
   _modules_dom__WEBPACK_IMPORTED_MODULE_2__.projectcollapse.hide();
@@ -22591,13 +22588,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "tasks": () => (/* binding */ tasks),
 /* harmony export */   "createTask": () => (/* binding */ createTask),
 /* harmony export */   "drawList": () => (/* binding */ drawList),
-/* harmony export */   "updateTask": () => (/* binding */ updateTask)
+/* harmony export */   "updateTask": () => (/* binding */ updateTask),
+/* harmony export */   "projects": () => (/* binding */ projects),
+/* harmony export */   "drawProjects": () => (/* binding */ drawProjects)
 /* harmony export */ });
 /* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom */ "./src/modules/dom.js");
 // eslint-disable-next-line import/no-cycle
 
 
 const tasks = [];
+
+const projects = [];
 
 const task = (title, project, priority, date) => ({
   title, project, priority, date,
@@ -22633,6 +22634,12 @@ const drawList = (title) => {
   }
 };
 
+const drawProjects = (collapse) => {
+  projects.forEach(element => {
+    (0,_dom__WEBPACK_IMPORTED_MODULE_0__.addProject)(collapse, true, element);
+  });
+};
+
 const createTask = (modal) => {
   if (title.value == '' || date.value == '') {// eslint-disable-line
     (0,_dom__WEBPACK_IMPORTED_MODULE_0__.addAlert)(document.querySelector('.modal-body'));
@@ -22650,12 +22657,12 @@ const createTask = (modal) => {
 };
 
 const updateTask = (modal) => {
-  tasks[hidden.value].title = title.value;
-  tasks[hidden.value].project = project.value;
-  tasks[hidden.value].priority = priority.value;
-  tasks[hidden.value].date = date.value;
+  tasks[hidden.value].title = title.value;// eslint-disable-line
+  tasks[hidden.value].project = project.value;// eslint-disable-line
+  tasks[hidden.value].priority = priority.value;// eslint-disable-line
+  tasks[hidden.value].date = date.value;// eslint-disable-line
   (0,_dom__WEBPACK_IMPORTED_MODULE_0__.saveToLocalStorage)();
-  drawList(project.value);
+  drawList(project.value);// eslint-disable-line
   modal.hide();
 };
 
@@ -22698,7 +22705,7 @@ const taskModal = new bootstrap.Modal(bsModal, { focus: false });
 // eslint-disable-next-line no-undef
 const projectcollapse = new bootstrap.Collapse(bsCollapse, { toggle: false });
 
-const addProject = (collapse, def = false) => {
+const addProject = (collapse, def = false, elem = '') => {
   const input = document.querySelector('#newProjectForm');
   const projects = document.querySelector('#projectsList');
   let projectTitle = input.value;
@@ -22718,6 +22725,15 @@ const addProject = (collapse, def = false) => {
     if (def === true) {
       anchor.textContent = 'Default';
       projectTitle = 'Default';
+      if (elem !== '') {
+        anchor.textContent = elem;
+        projectTitle = elem;
+        const option = document.createElement('option');
+        option.setAttribute('value', elem);
+        option.textContent = elem;
+        project.appendChild(option);
+        anchor.textContent = elem;
+      }
     } else {
       const option = document.createElement('option');
       option.setAttribute('value', projectTitle);
@@ -22767,6 +22783,7 @@ const clearTasks = () => {
 const saveToLocalStorage = () => {
   localStorage.clear();
   localStorage.setItem('tasks', JSON.stringify(_data__WEBPACK_IMPORTED_MODULE_0__.tasks));
+  localStorage.setItem('projects', JSON.stringify(_data__WEBPACK_IMPORTED_MODULE_0__.projects));
 };
 
 const retrieveLocalStorage = () => {
@@ -22774,6 +22791,12 @@ const retrieveLocalStorage = () => {
     const arr = JSON.parse(localStorage.getItem('tasks'));
     arr.forEach(element => {
       _data__WEBPACK_IMPORTED_MODULE_0__.tasks.push(element);
+    });
+  }
+  if (localStorage.projects) {
+    const arr2 = JSON.parse(localStorage.getItem('projects'));
+    arr2.forEach(element => {
+      _data__WEBPACK_IMPORTED_MODULE_0__.projects.push(element);
     });
   }
 };
