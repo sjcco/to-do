@@ -6,7 +6,7 @@ window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 const bsModal = document.getElementById('taskModal');
 const bsCollapse = document.getElementById('collapseNewProject');
 
-const taskModal = new bootstrap.Modal(bsModal, { focus: false });
+const taskModal = new bootstrap.Modal(bsModal, { focus: false });// eslint-disable-line
 // eslint-disable-next-line no-undef
 const projectcollapse = new bootstrap.Collapse(bsCollapse, { toggle: false });
 
@@ -113,7 +113,7 @@ const fillForm = (index) => {
   document.getElementById('date').value = tasks[index].date;
 };
 
-const clearForm = (index) => {
+const clearForm = () => {
   document.getElementById('title').value = '';
   document.getElementById('project').value = 'Default';
   document.getElementById('priority').value = 'low';
@@ -185,7 +185,6 @@ const drawTask = (task, index) => {
     taskModal.show();
   });
   input.addEventListener('change', (e) => {
-    console.log(e.target);
     tasks.splice(e.target.dataset.index, 1);
     saveToLocalStorage();
     drawList(document.getElementById('projectTitle').textContent);

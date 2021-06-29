@@ -1,9 +1,12 @@
 import '@fortawesome/fontawesome-free/js/all';
 import './main.scss';
-import { 
+import {
   addProject, retrieveLocalStorage, taskModal,
-  projectcollapse, clearForm, bsModal, saveToLocalStorage } from './modules/dom';
-import { createTask, drawList, updateTask, projects, drawProjects } from './modules/data';
+  projectcollapse, clearForm, bsModal, saveToLocalStorage,
+} from './modules/dom';
+import {
+  createTask, drawList, updateTask, projects, drawProjects,
+} from './modules/data';
 
 window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 
@@ -15,8 +18,7 @@ drawProjects();
 
 document.querySelector('#taskForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  console.log(hidden.value);
-  if (hidden.value === 'create') {
+  if (hidden.value === 'create') {// eslint-disable-line
     createTask(taskModal);
   } else {
     updateTask(taskModal);
