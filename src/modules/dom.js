@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import { drawList, tasks } from './data';
 
 const bsModal = document.getElementById('taskModal');
@@ -13,7 +14,6 @@ const addProject = (collapse, def = false) => {
     const li = document.createElement('li');
     const anchor = document.createElement('a');
     const project = document.getElementById('project');
-    console.log(project);
 
     li.classList.add('nav-item');
     anchor.classList.add('nav-link', 'text-white');
@@ -39,7 +39,7 @@ const addProject = (collapse, def = false) => {
 };
 
 const addAlert = (parent) => {
-  window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
+  window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');// eslint-disable-line
   const alert = document.createElement('div');
   alert.classList.add('alert', 'alert-warning', 'alert-dismissible', 'fade', 'show');
   alert.setAttribute('role', 'alert');
@@ -50,7 +50,7 @@ const addAlert = (parent) => {
   btn.setAttribute('data-bs-dismiss', 'alert');
   btn.setAttribute('type', 'button');
 
-  const bsAlert = new bootstrap.Alert(alert);
+  const bsAlert = new bootstrap.Alert(alert);// eslint-disable-line
 
 
   parent.insertBefore(alert, parent.firstChild);
@@ -113,7 +113,7 @@ function drawTask(task, index) {
   control.classList.add('control_indicator');
   label.appendChild(control);
   taskList.appendChild(label);
-  input.setAttribute('data-index', index)
+  input.setAttribute('data-index', index);
   input.addEventListener('change', (e) => {
     tasks.splice(e.target.dataset.index, 1);
     drawList(document.getElementById('projectTitle').textContent);

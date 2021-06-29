@@ -1,5 +1,6 @@
+// eslint-disable-next-line import/no-cycle
 import {
-  addProject, bsModal, bsCollapse, addAlert, rename, clearTasks, drawTask
+  addAlert, rename, clearTasks, drawTask,
 } from './dom';
 
 const tasks = [];
@@ -10,14 +11,14 @@ const task = (title, project, priority, date) => ({
 
 function drawList(title) {
   rename(title);
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-  today = yyyy + '-' + mm + '-' + dd;
+  let today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+  const yyyy = today.getFullYear();
+  today = `${yyyy}-${mm}-${dd}`;
   clearTasks();
 
-  if (title === 'Today') {    
+  if (title === 'Today') {
     tasks.forEach((task, index) => {
       if (task.date === today) {
         drawTask(task, index);
@@ -39,17 +40,16 @@ function drawList(title) {
 }
 
 function createTask(modal) {
-  if (title.value == '' || date.value == '') {
+  if (title.value == '' || date.value == '') {// eslint-disable-line
     addAlert(document.querySelector('.modal-body'));
   } else {
-    // eslint-disable-next-line no-undef
-    const newTask = task(title.value, project.value, priority.value, date.value);
+    const newTask = task(title.value, project.value, priority.value, date.value);// eslint-disable-line
     tasks.push(newTask);
-    drawList(project.value);
-    title.value = '';
-    project.value = 'Default';
-    priority.value = 'low';
-    date.value = '';
+    drawList(project.value);// eslint-disable-line
+    title.value = '';// eslint-disable-line
+    project.value = 'Default';// eslint-disable-line
+    priority.value = 'low';// eslint-disable-line
+    date.value = '';// eslint-disable-line
     modal.hide();
   }
 }

@@ -1,23 +1,15 @@
 import '@fortawesome/fontawesome-free/js/all';
 import './main.scss';
 import { addProject, bsModal, bsCollapse } from './modules/dom';
-import { task, tasks, createTask, drawList } from './modules/data';
+import {
+  createTask, drawList,
+} from './modules/data';
 
 window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 
-var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-  var  today1 = yyyy + '-' + mm + '-' + dd;
-
-    dd = String(today.getDate()+1).padStart(2, 0);
-    var tomorrow = yyyy + '-' + mm + '-' + dd;
-    console.log(today1);
-    console.log(tomorrow);
-    console.log(tomorrow < today1);
-
+// eslint-disable-next-line no-undef
 const taskModal = new bootstrap.Modal(bsModal, { focus: false });
+// eslint-disable-next-line no-undef
 const projectcollapse = new bootstrap.Collapse(bsCollapse, { toggle: false });
 
 
