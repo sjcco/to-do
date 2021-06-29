@@ -22544,19 +22544,9 @@ __webpack_require__.r(__webpack_exports__);
 
 window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.js");
 
-var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-  var  today1 = yyyy + '-' + mm + '-' + dd;
-
-    dd = String(today.getDate()+1).padStart(2, 0);
-    var tomorrow = yyyy + '-' + mm + '-' + dd;
-    console.log(today1);
-    console.log(tomorrow);
-    console.log(tomorrow < today1);
-
+// eslint-disable-next-line no-undef
 const taskModal = new bootstrap.Modal(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.bsModal, { focus: false });
+// eslint-disable-next-line no-undef
 const projectcollapse = new bootstrap.Collapse(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.bsCollapse, { toggle: false });
 
 
@@ -22588,10 +22578,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "task": () => (/* binding */ task),
 /* harmony export */   "tasks": () => (/* binding */ tasks),
 /* harmony export */   "createTask": () => (/* binding */ createTask),
-/* harmony export */   "drawList": () => (/* binding */ drawList),
-/* harmony export */   "drawListbyDate": () => (/* binding */ drawListbyDate)
+/* harmony export */   "drawList": () => (/* binding */ drawList)
 /* harmony export */ });
 /* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom */ "./src/modules/dom.js");
+// eslint-disable-next-line import/no-cycle
 
 
 const tasks = [];
@@ -22602,14 +22592,14 @@ const task = (title, project, priority, date) => ({
 
 function drawList(title) {
   (0,_dom__WEBPACK_IMPORTED_MODULE_0__.rename)(title);
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-  today = yyyy + '-' + mm + '-' + dd;
+  let today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+  const yyyy = today.getFullYear();
+  today = `${yyyy}-${mm}-${dd}`;
   (0,_dom__WEBPACK_IMPORTED_MODULE_0__.clearTasks)();
 
-  if (title === 'Today') {    
+  if (title === 'Today') {
     tasks.forEach((task, index) => {
       if (task.date === today) {
         (0,_dom__WEBPACK_IMPORTED_MODULE_0__.drawTask)(task, index);
@@ -22630,33 +22620,17 @@ function drawList(title) {
   }
 }
 
-function drawListbyDate(title) {
-  (0,_dom__WEBPACK_IMPORTED_MODULE_0__.rename)(title);
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-  today = yyyy + '-' + mm + '-' + dd;
-  (0,_dom__WEBPACK_IMPORTED_MODULE_0__.clearTasks)();
-  tasks.forEach((task, index) => {
-    if (task.date === today) {
-      (0,_dom__WEBPACK_IMPORTED_MODULE_0__.drawTask)(task, index);
-    }
-  });
-}
-
 function createTask(modal) {
-  if (title.value == '' || date.value == '') {
+  if (title.value == '' || date.value == '') {// eslint-disable-line
     (0,_dom__WEBPACK_IMPORTED_MODULE_0__.addAlert)(document.querySelector('.modal-body'));
   } else {
-    // eslint-disable-next-line no-undef
-    const newTask = task(title.value, project.value, priority.value, date.value);
+    const newTask = task(title.value, project.value, priority.value, date.value);// eslint-disable-line
     tasks.push(newTask);
-    drawList(project.value);
-    title.value = '';
-    project.value = 'Default';
-    priority.value = 'low';
-    date.value = '';
+    drawList(project.value);// eslint-disable-line
+    title.value = '';// eslint-disable-line
+    project.value = 'Default';// eslint-disable-line
+    priority.value = 'low';// eslint-disable-line
+    date.value = '';// eslint-disable-line
     modal.hide();
   }
 }
@@ -22683,6 +22657,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "drawTask": () => (/* binding */ drawTask)
 /* harmony export */ });
 /* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data */ "./src/modules/data.js");
+// eslint-disable-next-line import/no-cycle
 
 
 const bsModal = document.getElementById('taskModal');
@@ -22698,7 +22673,6 @@ const addProject = (collapse, def = false) => {
     const li = document.createElement('li');
     const anchor = document.createElement('a');
     const project = document.getElementById('project');
-    console.log(project);
 
     li.classList.add('nav-item');
     anchor.classList.add('nav-link', 'text-white');
@@ -22724,7 +22698,7 @@ const addProject = (collapse, def = false) => {
 };
 
 const addAlert = (parent) => {
-  window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.js");
+  window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.js");// eslint-disable-line
   const alert = document.createElement('div');
   alert.classList.add('alert', 'alert-warning', 'alert-dismissible', 'fade', 'show');
   alert.setAttribute('role', 'alert');
@@ -22735,7 +22709,7 @@ const addAlert = (parent) => {
   btn.setAttribute('data-bs-dismiss', 'alert');
   btn.setAttribute('type', 'button');
 
-  const bsAlert = new bootstrap.Alert(alert);
+  const bsAlert = new bootstrap.Alert(alert);// eslint-disable-line
 
 
   parent.insertBefore(alert, parent.firstChild);
@@ -22798,7 +22772,7 @@ function drawTask(task, index) {
   control.classList.add('control_indicator');
   label.appendChild(control);
   taskList.appendChild(label);
-  input.setAttribute('data-index', index)
+  input.setAttribute('data-index', index);
   input.addEventListener('change', (e) => {
     _data__WEBPACK_IMPORTED_MODULE_0__.tasks.splice(e.target.dataset.index, 1);
     (0,_data__WEBPACK_IMPORTED_MODULE_0__.drawList)(document.getElementById('projectTitle').textContent);
