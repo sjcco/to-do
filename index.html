@@ -58,7 +58,7 @@
       </aside>
       <div id="content" class="col-9 col-lg-10 bg-light d-flex flex-column">
         
-        <div class="col-7 to-do my-5 mx-auto">
+        <div class="col-9 to-do my-5 mx-auto">
           <h1 id="projectTitle" class="text-center display-3 mt-5">Default</h1>
           <div id="tasksContainer" class="m-5 d-flex flex-column">
             
@@ -76,6 +76,7 @@
               </div>
               <div class="modal-body">
                 <form class="px-5" id="taskForm">
+                  <input id="hidden" type="hidden" value="create">
                   <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="title" placeholder="title">
                     <label for="title">title</label>
@@ -92,6 +93,7 @@
                     </div>
                     <div class="col-md">
                       <div class="form-floating">
+                        
                         <select class="form-select" id="priority" aria-label="Floating label select example">
                           <option value="low" selected>low</option>
                           <option value="medium">medium</option>
