@@ -157,7 +157,27 @@ input:checked label {
 }
 
 #sidebar {
-  min-height: 100vh;
+  height: calc(100vh - 56px);
+
+  ::-webkit-scrollbar {
+    width: 13px;
+    height: 13px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #3f4a59;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #485566;
+    border-radius: 10px;
+  }
+
+  .projects {
+    max-height: 300px;
+    overflow-y: auto;
+  }
 }
 
 #content {
