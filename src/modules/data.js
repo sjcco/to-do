@@ -10,12 +10,32 @@ const task = (title, project, priority, date) => ({
 
 function drawList(title) {
   rename(title);
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = yyyy + '-' + mm + '-' + dd;
   clearTasks();
-  tasks.forEach((task, index) => {
-    if (task.project === title) {
-      drawTask(task, index);
-    }
-  });
+
+  if (title === 'Today') {    
+    tasks.forEach((task, index) => {
+      if (task.date === today) {
+        drawTask(task, index);
+      }
+    });
+  } else if (title === 'Upcoming') {
+    tasks.forEach((task, index) => {
+      if (task.date > today) {
+        drawTask(task, index);
+      }
+    });
+  } else {
+    tasks.forEach((task, index) => {
+      if (task.project === title) {
+        drawTask(task, index);
+      }
+    });
+  }
 }
 
 function createTask(modal) {

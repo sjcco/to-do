@@ -22544,6 +22544,18 @@ __webpack_require__.r(__webpack_exports__);
 
 window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.js");
 
+var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+  var  today1 = yyyy + '-' + mm + '-' + dd;
+
+    dd = String(today.getDate()+1).padStart(2, 0);
+    var tomorrow = yyyy + '-' + mm + '-' + dd;
+    console.log(today1);
+    console.log(tomorrow);
+    console.log(tomorrow < today1);
+
 const taskModal = new bootstrap.Modal(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.bsModal, { focus: false });
 const projectcollapse = new bootstrap.Collapse(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.bsCollapse, { toggle: false });
 
@@ -22559,6 +22571,8 @@ document.querySelector('#cancelProjectBtn').onclick = () => {
   document.getElementById('newProjectForm').value = '';
   projectcollapse.hide();
 };
+document.getElementById('today').onclick = () => { (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawList)('Today'); };
+document.getElementById('upcoming').onclick = () => { (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawList)('Upcoming'); };
 
 /***/ }),
 
@@ -22574,7 +22588,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "task": () => (/* binding */ task),
 /* harmony export */   "tasks": () => (/* binding */ tasks),
 /* harmony export */   "createTask": () => (/* binding */ createTask),
-/* harmony export */   "drawList": () => (/* binding */ drawList)
+/* harmony export */   "drawList": () => (/* binding */ drawList),
+/* harmony export */   "drawListbyDate": () => (/* binding */ drawListbyDate)
 /* harmony export */ });
 /* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dom */ "./src/modules/dom.js");
 
@@ -22587,9 +22602,44 @@ const task = (title, project, priority, date) => ({
 
 function drawList(title) {
   (0,_dom__WEBPACK_IMPORTED_MODULE_0__.rename)(title);
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = yyyy + '-' + mm + '-' + dd;
+  (0,_dom__WEBPACK_IMPORTED_MODULE_0__.clearTasks)();
+
+  if (title === 'Today') {    
+    tasks.forEach((task, index) => {
+      if (task.date === today) {
+        (0,_dom__WEBPACK_IMPORTED_MODULE_0__.drawTask)(task, index);
+      }
+    });
+  } else if (title === 'Upcoming') {
+    tasks.forEach((task, index) => {
+      if (task.date > today) {
+        (0,_dom__WEBPACK_IMPORTED_MODULE_0__.drawTask)(task, index);
+      }
+    });
+  } else {
+    tasks.forEach((task, index) => {
+      if (task.project === title) {
+        (0,_dom__WEBPACK_IMPORTED_MODULE_0__.drawTask)(task, index);
+      }
+    });
+  }
+}
+
+function drawListbyDate(title) {
+  (0,_dom__WEBPACK_IMPORTED_MODULE_0__.rename)(title);
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  today = yyyy + '-' + mm + '-' + dd;
   (0,_dom__WEBPACK_IMPORTED_MODULE_0__.clearTasks)();
   tasks.forEach((task, index) => {
-    if (task.project === title) {
+    if (task.date === today) {
       (0,_dom__WEBPACK_IMPORTED_MODULE_0__.drawTask)(task, index);
     }
   });
