@@ -14,7 +14,7 @@ Page similar to [todoist](https://en.todoist.com/) where you can create a todo-l
 
 ## Live Demo
 
-[Live Demo Link](https://sjcco.github.io/restaurant-page/)
+[Live Demo Link](https://sjcco.github.io/to-do/)
 
 
 ## Getting Started
