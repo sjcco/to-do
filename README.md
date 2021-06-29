@@ -20,6 +20,7 @@ Page similar to [todoist](https://en.todoist.com/) where you can create a todo-l
 ## Getting Started
 
 - First clone the project by running `git clone https://github.com/sjcco/to-do`.
+- navigate to project folder using `cd`.
 - Run `npm install` to install the needed .
 - Run `npm start` to open in browser.
 
