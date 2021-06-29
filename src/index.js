@@ -1,21 +1,16 @@
 import '@fortawesome/fontawesome-free/js/all';
 import './main.scss';
 import { 
-  addProject, retrieveLocalStorage, taskModal, projectcollapse, clearForm, bsModal } from './modules/dom';
-import { createTask, drawList, updateTask } from './modules/data';
+  addProject, retrieveLocalStorage, taskModal,
+  projectcollapse, clearForm, bsModal, saveToLocalStorage } from './modules/dom';
+import { createTask, drawList, updateTask, projects, drawProjects } from './modules/data';
 
 window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
-
-
-let stuff = document.getElementById('content');
-let button = document.createElement('button');
-button.textContent = 'open modal';
-button.addEventListener('click', () => { taskModal.show(); });
-stuff.appendChild(button);
 
 addProject(projectcollapse, true);
 retrieveLocalStorage();
 drawList('Default');
+drawProjects();
 
 
 document.querySelector('#taskForm').addEventListener('submit', (e) => {
@@ -26,10 +21,13 @@ document.querySelector('#taskForm').addEventListener('submit', (e) => {
   } else {
     updateTask(taskModal);
   }
-  
 });
 document.querySelector('#addTask').onclick = () => { document.getElementById('hidden').value = 'create'; };
-document.querySelector('#newProjectBtn').onclick = () => { addProject(projectcollapse); };
+document.querySelector('#newProjectBtn').onclick = () => {
+  projects.push(document.querySelector('#newProjectForm').value);
+  saveToLocalStorage();
+  addProject(projectcollapse);
+};
 document.querySelector('#cancelProjectBtn').onclick = () => {
   document.getElementById('newProjectForm').value = '';
   projectcollapse.hide();

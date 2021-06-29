@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { drawList, tasks } from './data';
+import { drawList, projects, tasks } from './data';
 
 window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 
@@ -10,7 +10,7 @@ const taskModal = new bootstrap.Modal(bsModal, { focus: false });
 // eslint-disable-next-line no-undef
 const projectcollapse = new bootstrap.Collapse(bsCollapse, { toggle: false });
 
-const addProject = (collapse, def = false) => {
+const addProject = (collapse, def = false, elem = '') => {
   const input = document.querySelector('#newProjectForm');
   const projects = document.querySelector('#projectsList');
   let projectTitle = input.value;
@@ -30,6 +30,15 @@ const addProject = (collapse, def = false) => {
     if (def === true) {
       anchor.textContent = 'Default';
       projectTitle = 'Default';
+      if (elem !== '') {
+        anchor.textContent = elem;
+        projectTitle = elem;
+        const option = document.createElement('option');
+        option.setAttribute('value', elem);
+        option.textContent = elem;
+        project.appendChild(option);
+        anchor.textContent = elem;
+      }
     } else {
       const option = document.createElement('option');
       option.setAttribute('value', projectTitle);
@@ -79,6 +88,7 @@ const clearTasks = () => {
 const saveToLocalStorage = () => {
   localStorage.clear();
   localStorage.setItem('tasks', JSON.stringify(tasks));
+  localStorage.setItem('projects', JSON.stringify(projects));
 };
 
 const retrieveLocalStorage = () => {
@@ -86,6 +96,12 @@ const retrieveLocalStorage = () => {
     const arr = JSON.parse(localStorage.getItem('tasks'));
     arr.forEach(element => {
       tasks.push(element);
+    });
+  }
+  if (localStorage.projects) {
+    const arr2 = JSON.parse(localStorage.getItem('projects'));
+    arr2.forEach(element => {
+      projects.push(element);
     });
   }
 };

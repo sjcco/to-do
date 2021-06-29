@@ -1,9 +1,11 @@
 // eslint-disable-next-line import/no-cycle
 import {
-  addAlert, rename, clearTasks, drawTask, saveToLocalStorage,
+  addAlert, rename, clearTasks, drawTask, saveToLocalStorage, addProject,
 } from './dom';
 
 const tasks = [];
+
+const projects = [];
 
 const task = (title, project, priority, date) => ({
   title, project, priority, date,
@@ -39,6 +41,12 @@ const drawList = (title) => {
   }
 };
 
+const drawProjects = (collapse) => {
+  projects.forEach(element => {
+    addProject(collapse, true, element);
+  });
+};
+
 const createTask = (modal) => {
   if (title.value == '' || date.value == '') {// eslint-disable-line
     addAlert(document.querySelector('.modal-body'));
@@ -56,15 +64,15 @@ const createTask = (modal) => {
 };
 
 const updateTask = (modal) => {
-  tasks[hidden.value].title = title.value;
-  tasks[hidden.value].project = project.value;
-  tasks[hidden.value].priority = priority.value;
-  tasks[hidden.value].date = date.value;
+  tasks[hidden.value].title = title.value;// eslint-disable-line
+  tasks[hidden.value].project = project.value;// eslint-disable-line
+  tasks[hidden.value].priority = priority.value;// eslint-disable-line
+  tasks[hidden.value].date = date.value;// eslint-disable-line
   saveToLocalStorage();
-  drawList(project.value);
+  drawList(project.value);// eslint-disable-line
   modal.hide();
 };
 
 export {
-  task, tasks, createTask, drawList, updateTask,
+  task, tasks, createTask, drawList, updateTask, projects, drawProjects,
 };
