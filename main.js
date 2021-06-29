@@ -22552,8 +22552,7 @@ window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js
 
 document.querySelector('#taskForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  console.log(hidden.value);
-  if (hidden.value === 'create') {
+  if (hidden.value === 'create') {// eslint-disable-line
     (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.createTask)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.taskModal);
   } else {
     (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.updateTask)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.taskModal);
@@ -22701,7 +22700,7 @@ window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js
 const bsModal = document.getElementById('taskModal');
 const bsCollapse = document.getElementById('collapseNewProject');
 
-const taskModal = new bootstrap.Modal(bsModal, { focus: false });
+const taskModal = new bootstrap.Modal(bsModal, { focus: false });// eslint-disable-line
 // eslint-disable-next-line no-undef
 const projectcollapse = new bootstrap.Collapse(bsCollapse, { toggle: false });
 
@@ -22808,7 +22807,7 @@ const fillForm = (index) => {
   document.getElementById('date').value = _data__WEBPACK_IMPORTED_MODULE_0__.tasks[index].date;
 };
 
-const clearForm = (index) => {
+const clearForm = () => {
   document.getElementById('title').value = '';
   document.getElementById('project').value = 'Default';
   document.getElementById('priority').value = 'low';
@@ -22880,7 +22879,6 @@ const drawTask = (task, index) => {
     taskModal.show();
   });
   input.addEventListener('change', (e) => {
-    console.log(e.target);
     _data__WEBPACK_IMPORTED_MODULE_0__.tasks.splice(e.target.dataset.index, 1);
     saveToLocalStorage();
     (0,_data__WEBPACK_IMPORTED_MODULE_0__.drawList)(document.getElementById('projectTitle').textContent);
