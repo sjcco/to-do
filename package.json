@@ -4,8 +4,9 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "webpack serve --open",
-    "build": "webpack"
+    "dev": "webpack --mode development",
+    "start": "webpack serve --mode development --open",
+    "build": "webpack --mode production"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +33,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@popperjs/core": "^2.9.2",
-    "bootstrap": "^5.0.2"
+    "bootstrap": "^5.0.2",
+    "jquery": "^3.6.0"
   }
 }

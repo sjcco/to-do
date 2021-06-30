@@ -18,30 +18,37 @@
     </nav>
     
     <div class="container-fluid mx-0 px-0 row">
-      <aside id="sidebar" class="col-2 bg-dark px-0">
+      <aside id="sidebar" class="col-3 col-lg-2 bg-dark px-0">
         <ul class="nav flex-column mt-5">
           <li class="nav-item">
             <a class="nav-link fs-3 fw-bold text-sucess" aria-current="page">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" href="#"><i class="fas fa-calendar-day"></i> Today</a>
+            <a id="today" class="nav-link text-white" aria-current="page" href="#"><i class="fas fa-calendar-day"></i> Today</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="#"><i class="far fa-calendar-alt"></i> Upcoming</a>
+            <a id="upcoming" class="nav-link text-white" href="#"><i class="far fa-calendar-alt"></i> Upcoming</a>
           </li>
           <li class="nav-item">
             <a class="fs-3 fw-bold text-primary accordion-button p-2 bg-dark text-decoration-none" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Projects</a>
-            <div class="collapse show" id="collapseExample">
-              <div class="card card-body bg-secondary border-0">
-                <ul class="nav flex-column">
+            <div class="collapse show " id="collapseExample">
+              <div class="card card-body bg-secondary border-0 projects">
+                <ul id="projectsList" class="nav flex-column">
                   <li class="nav-item">
-                    <a class="nav-link text-white active" aria-current="page" href="#">Active</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Link</a>
+                    <a class="nav-link text-white" data-bs-toggle="collapse" href="#collapseNewProject" role="button" aria-expanded="false" aria-controls="collapseNewProject"><i class="fs-6 far fa-plus-square"></i> New project</a>
+                    <div class="collapse" id="collapseNewProject">
+                      <div class="card card-body bg-secondary px-1 border-0">
+                        
+                        <div class="row">
+                          <div class="form-floating mb-3 col-12 px-1">
+                            <input type="text" class="form-control" id="newProjectForm" placeholder="name@example.com">
+                            <label for="newProjectForm">New project</label>
+                          </div>
+                          <div class="col-6 d-grip gap-2"><button id="newProjectBtn" class="btn btn-success text-white w-100">Add</button></div>
+                          <div class="col-6 d-grip gap-2"><button id="cancelProjectBtn" class="btn btn-danger text-white">Cancel</button></div>
+                        </div>
+                      </div>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -49,32 +56,18 @@
           </li>
         </ul>
       </aside>
-      <div id="content" class="col-10 bg-light d-flex flex-column">
+      <div id="content" class="col-9 col-lg-10 bg-light d-flex flex-column">
         
-        <div class="col-7 to-do my-5 mx-auto">
-          <h1 class="text-center display-3 mt-5">Default</h1>
-          <div class="m-5 d-flex flex-column">
-            <label class="control control-checkbox mx-5 mb-4">
-              First checkbox
-                  <input type="checkbox" checked="checked" />
-              <div class="control_indicator"></div>
-            </label>
-            <label class="control control-checkbox mx-5 mb-4">
-              First checkbox
-                  <input type="checkbox" checked="checked" />
-              <div class="control_indicator"></div>
-            </label>
-            <label class="control control-checkbox mx-5">
-              First checkbox
-                  <input type="checkbox" checked="checked" />
-              <div class="control_indicator"></div>
-            </label>
+        <div class="col-9 to-do my-5 mx-auto">
+          <h1 id="projectTitle" class="text-center display-3 mt-5">Default</h1>
+          <div id="tasksContainer" class="m-5 d-flex flex-column">
+            
           </div>
         </div>
 
-        <button type="button" class="col-2 mx-auto btn btn-secondary bg-gradient" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fs-6 far fa-plus-square"></i> add task</button>
+        <button id="addTask" type="button" class="col-2 mx-auto btn btn-secondary bg-gradient" data-bs-toggle="modal" data-bs-target="#taskModal"></i> add task</button>
         
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
@@ -82,35 +75,42 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form class="px-5">
+                <form class="px-5" id="taskForm">
+                  <input id="hidden" type="hidden" value="create">
                   <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="title" placeholder="title">
                     <label for="title">title</label>
                   </div>
                   
-                  <div class="row g-2">
+                  <div class="row g-2 mb-3">
                     <div class="col-md">
                       <div class="form-floating">
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                          <option selected>Default</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
+                        <select class="form-select" id="project" aria-label="Floating label select example">
+                          <option value='Default' selected>Default</option>
                         </select>
-                        <label for="floatingSelect">projects</label>
+                        <label for="project">projects</label>
                       </div>
                     </div>
                     <div class="col-md">
-                      <div class="input-group mb-3">
-                        <span class="input-group-text py-3" id="basic-addon1">Date</span>
-                        <input type="date" class="form-control py-3">
+                      <div class="form-floating">
+                        
+                        <select class="form-select" id="priority" aria-label="Floating label select example">
+                          <option value="low" selected>low</option>
+                          <option value="medium">medium</option>
+                          <option value="high">High</option>
+                        </select>
+                        <label for="priority">Priority</label>
                       </div>
                     </div>
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text py-3" id="basic-addon1">Date</span>
+                    <input type="date" id="date" class="form-control py-3">
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary text-white bg-gradient">Save task</button>
+                <button type="submit" form="taskForm" class="btn btn-primary text-white bg-gradient">Save task</button>
               </div>
             </div>
           </div>
@@ -119,6 +119,6 @@
       </div>
     </div>
 
-    <script src="main.js" async defer></script>
+    <script src="main.js" type="text/javascript"></script>
   </body>
 </html>
