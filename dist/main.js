@@ -22542,9 +22542,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.js");
-
-(0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.projectcollapse, true);
+const modal = (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.taskModal)();
+const projectcollapse = (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.projectCollapse)();
+(0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(projectcollapse, true);
 (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.retrieveLocalStorage)();
 (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawList)('Default');
 (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawProjects)();
@@ -22553,20 +22553,20 @@ window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js
 document.querySelector('#taskForm').addEventListener('submit', (e) => {
   e.preventDefault();
   if (hidden.value === 'create') {// eslint-disable-line
-    (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.createTask)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.taskModal);
+    (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.createTask)(modal);
   } else {
-    (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.updateTask)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.taskModal);
+    (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.updateTask)(modal);
   }
 });
 document.querySelector('#addTask').onclick = () => { document.getElementById('hidden').value = 'create'; };
 document.querySelector('#newProjectBtn').onclick = () => {
   _modules_data__WEBPACK_IMPORTED_MODULE_3__.projects.push(document.querySelector('#newProjectForm').value);
   (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.saveToLocalStorage)();
-  (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(_modules_dom__WEBPACK_IMPORTED_MODULE_2__.projectcollapse);
+  (0,_modules_dom__WEBPACK_IMPORTED_MODULE_2__.addProject)(projectcollapse);
 };
 document.querySelector('#cancelProjectBtn').onclick = () => {
   document.getElementById('newProjectForm').value = '';
-  _modules_dom__WEBPACK_IMPORTED_MODULE_2__.projectcollapse.hide();
+  projectcollapse.hide();
 };
 document.getElementById('today').onclick = () => { (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawList)('Today'); };
 document.getElementById('upcoming').onclick = () => { (0,_modules_data__WEBPACK_IMPORTED_MODULE_3__.drawList)('Upcoming'); };
@@ -22688,21 +22688,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "saveToLocalStorage": () => (/* binding */ saveToLocalStorage),
 /* harmony export */   "retrieveLocalStorage": () => (/* binding */ retrieveLocalStorage),
 /* harmony export */   "taskModal": () => (/* binding */ taskModal),
-/* harmony export */   "projectcollapse": () => (/* binding */ projectcollapse),
+/* harmony export */   "projectCollapse": () => (/* binding */ projectCollapse),
 /* harmony export */   "clearForm": () => (/* binding */ clearForm)
 /* harmony export */ });
-/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data */ "./src/modules/data.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var bootstrap_dist_js_bootstrap_bundle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.js");
+/* harmony import */ var bootstrap_dist_js_bootstrap_bundle__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_js_bootstrap_bundle__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data */ "./src/modules/data.js");
+
+
 // eslint-disable-next-line import/no-cycle
 
 
-window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.js");
+window.$ = window.jQuery = (jquery__WEBPACK_IMPORTED_MODULE_0___default());// eslint-disable-line 
 
 const bsModal = document.getElementById('taskModal');
 const bsCollapse = document.getElementById('collapseNewProject');
 
-const taskModal = new bootstrap.Modal(bsModal, { focus: false });// eslint-disable-line
-// eslint-disable-next-line no-undef
-const projectcollapse = new bootstrap.Collapse(bsCollapse, { toggle: false });
+const taskModal = () => new (bootstrap_dist_js_bootstrap_bundle__WEBPACK_IMPORTED_MODULE_1___default().Modal)(bsModal, { focus: false });
+const projectCollapse = () => new (bootstrap_dist_js_bootstrap_bundle__WEBPACK_IMPORTED_MODULE_1___default().Collapse)(bsCollapse, { toggle: false });
 
 const addProject = (collapse, def = false, elem = '') => {
   const input = document.querySelector('#newProjectForm');
@@ -22743,12 +22748,11 @@ const addProject = (collapse, def = false, elem = '') => {
       collapse.hide();
     }
 
-    anchor.addEventListener('click', () => { (0,_data__WEBPACK_IMPORTED_MODULE_0__.drawList)(projectTitle); });
+    anchor.addEventListener('click', () => { (0,_data__WEBPACK_IMPORTED_MODULE_2__.drawList)(projectTitle); });
   }
 };
 
 const addAlert = (parent) => {
-  window.bootstrap = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.js */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.js");// eslint-disable-line
   const alert = document.createElement('div');
   alert.classList.add('alert', 'alert-warning', 'alert-dismissible', 'fade', 'show');
   alert.setAttribute('role', 'alert');
@@ -22759,7 +22763,7 @@ const addAlert = (parent) => {
   btn.setAttribute('data-bs-dismiss', 'alert');
   btn.setAttribute('type', 'button');
 
-  const bsAlert = new bootstrap.Alert(alert);// eslint-disable-line
+  const bsAlert = new (bootstrap_dist_js_bootstrap_bundle__WEBPACK_IMPORTED_MODULE_1___default().Alert)(alert);
 
 
   parent.insertBefore(alert, parent.firstChild);
@@ -22781,30 +22785,30 @@ const clearTasks = () => {
 
 const saveToLocalStorage = () => {
   localStorage.clear();
-  localStorage.setItem('tasks', JSON.stringify(_data__WEBPACK_IMPORTED_MODULE_0__.tasks));
-  localStorage.setItem('projects', JSON.stringify(_data__WEBPACK_IMPORTED_MODULE_0__.projects));
+  localStorage.setItem('tasks', JSON.stringify(_data__WEBPACK_IMPORTED_MODULE_2__.tasks));
+  localStorage.setItem('projects', JSON.stringify(_data__WEBPACK_IMPORTED_MODULE_2__.projects));
 };
 
 const retrieveLocalStorage = () => {
   if (localStorage.tasks) {
     const arr = JSON.parse(localStorage.getItem('tasks'));
     arr.forEach(element => {
-      _data__WEBPACK_IMPORTED_MODULE_0__.tasks.push(element);
+      _data__WEBPACK_IMPORTED_MODULE_2__.tasks.push(element);
     });
   }
   if (localStorage.projects) {
     const arr2 = JSON.parse(localStorage.getItem('projects'));
     arr2.forEach(element => {
-      _data__WEBPACK_IMPORTED_MODULE_0__.projects.push(element);
+      _data__WEBPACK_IMPORTED_MODULE_2__.projects.push(element);
     });
   }
 };
 
 const fillForm = (index) => {
-  document.getElementById('title').value = _data__WEBPACK_IMPORTED_MODULE_0__.tasks[index].title;
-  document.getElementById('project').value = _data__WEBPACK_IMPORTED_MODULE_0__.tasks[index].project;
-  document.getElementById('priority').value = _data__WEBPACK_IMPORTED_MODULE_0__.tasks[index].priority;
-  document.getElementById('date').value = _data__WEBPACK_IMPORTED_MODULE_0__.tasks[index].date;
+  document.getElementById('title').value = _data__WEBPACK_IMPORTED_MODULE_2__.tasks[index].title;
+  document.getElementById('project').value = _data__WEBPACK_IMPORTED_MODULE_2__.tasks[index].project;
+  document.getElementById('priority').value = _data__WEBPACK_IMPORTED_MODULE_2__.tasks[index].priority;
+  document.getElementById('date').value = _data__WEBPACK_IMPORTED_MODULE_2__.tasks[index].date;
 };
 
 const clearForm = () => {
@@ -22876,12 +22880,12 @@ const drawTask = (task, index) => {
   editAnchor.addEventListener('click', (e) => {
     document.getElementById('hidden').value = e.target.closest('a').dataset.index;
     fillForm(e.target.closest('a').dataset.index);
-    taskModal.show();
+    $('#taskModal').modal('show');// eslint-disable-line
   });
   input.addEventListener('change', (e) => {
-    _data__WEBPACK_IMPORTED_MODULE_0__.tasks.splice(e.target.dataset.index, 1);
+    _data__WEBPACK_IMPORTED_MODULE_2__.tasks.splice(e.target.dataset.index, 1);
     saveToLocalStorage();
-    (0,_data__WEBPACK_IMPORTED_MODULE_0__.drawList)(document.getElementById('projectTitle').textContent);
+    (0,_data__WEBPACK_IMPORTED_MODULE_2__.drawList)(document.getElementById('projectTitle').textContent);
   });
 };
 
