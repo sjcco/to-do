@@ -1,14 +1,15 @@
+import jQuery from 'jquery';
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
 // eslint-disable-next-line import/no-cycle
 import { drawList, projects, tasks } from './data';
 
-window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
+window.$ = window.jQuery = jQuery;// eslint-disable-line 
 
 const bsModal = document.getElementById('taskModal');
 const bsCollapse = document.getElementById('collapseNewProject');
 
-const taskModal = new bootstrap.Modal(bsModal, { focus: false });// eslint-disable-line
-// eslint-disable-next-line no-undef
-const projectcollapse = new bootstrap.Collapse(bsCollapse, { toggle: false });
+const taskModal = () => new bootstrap.Modal(bsModal, { focus: false });
+const projectCollapse = () => new bootstrap.Collapse(bsCollapse, { toggle: false });
 
 const addProject = (collapse, def = false, elem = '') => {
   const input = document.querySelector('#newProjectForm');
@@ -54,7 +55,6 @@ const addProject = (collapse, def = false, elem = '') => {
 };
 
 const addAlert = (parent) => {
-  window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');// eslint-disable-line
   const alert = document.createElement('div');
   alert.classList.add('alert', 'alert-warning', 'alert-dismissible', 'fade', 'show');
   alert.setAttribute('role', 'alert');
@@ -65,7 +65,7 @@ const addAlert = (parent) => {
   btn.setAttribute('data-bs-dismiss', 'alert');
   btn.setAttribute('type', 'button');
 
-  const bsAlert = new bootstrap.Alert(alert);// eslint-disable-line
+  const bsAlert = new bootstrap.Alert(alert);
 
 
   parent.insertBefore(alert, parent.firstChild);
@@ -182,7 +182,7 @@ const drawTask = (task, index) => {
   editAnchor.addEventListener('click', (e) => {
     document.getElementById('hidden').value = e.target.closest('a').dataset.index;
     fillForm(e.target.closest('a').dataset.index);
-    taskModal.show();
+    $('#taskModal').modal('show');// eslint-disable-line
   });
   input.addEventListener('change', (e) => {
     tasks.splice(e.target.dataset.index, 1);
@@ -194,5 +194,5 @@ const drawTask = (task, index) => {
 export {
   addProject, bsModal, bsCollapse, addAlert, rename,
   clearTasks, drawTask, saveToLocalStorage, retrieveLocalStorage,
-  taskModal, projectcollapse, clearForm,
+  taskModal, projectCollapse, clearForm,
 };

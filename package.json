@@ -4,6 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
+    "test": "jest",
     "dev": "webpack --mode development",
     "start": "webpack serve --mode development --open",
     "build": "webpack --mode production"
@@ -12,13 +13,16 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/preset-env": "^7.14.7",
     "@types/bootstrap": "^5.0.16",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^27.0.6",
     "css-loader": "^5.2.6",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
     "file-loader": "^6.2.0",
+    "jest": "^27.0.6",
     "node-sass": "^6.0.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.0.0",

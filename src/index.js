@@ -1,15 +1,15 @@
 import '@fortawesome/fontawesome-free/js/all';
 import './main.scss';
 import {
-  addProject, retrieveLocalStorage, taskModal,
-  projectcollapse, clearForm, bsModal, saveToLocalStorage,
+  addProject, retrieveLocalStorage, clearForm, bsModal, saveToLocalStorage,
+  projectCollapse, taskModal,
 } from './modules/dom';
 import {
   createTask, drawList, updateTask, projects, drawProjects,
 } from './modules/data';
 
-window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
-
+const modal = taskModal();
+const projectcollapse = projectCollapse();
 addProject(projectcollapse, true);
 retrieveLocalStorage();
 drawList('Default');
@@ -19,9 +19,9 @@ drawProjects();
 document.querySelector('#taskForm').addEventListener('submit', (e) => {
   e.preventDefault();
   if (hidden.value === 'create') {// eslint-disable-line
-    createTask(taskModal);
+    createTask(modal);
   } else {
-    updateTask(taskModal);
+    updateTask(modal);
   }
 });
 document.querySelector('#addTask').onclick = () => { document.getElementById('hidden').value = 'create'; };
